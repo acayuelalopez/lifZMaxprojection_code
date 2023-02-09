@@ -170,8 +170,8 @@ for (def i = 0; i < listOfFiles.length; i++) {
 IJ.log("Done!!!")
 // exit
 //
-//if (headless)
-//    System.exit(0)
+if (headless)
+    System.exit(0)
 
 
 
