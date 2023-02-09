@@ -15,7 +15,7 @@ This is a Groovy script to do z-max projection, change display range per channel
 
 ## Running lifZMaxprojection_code in headless mode through macOS Terminal  (My OWN parameters)
 
-``/home/anaacayuela/Desktop/fiji-linux64/Fiji.app/ImageJ-macosx --ij2 --headless --run "/home/anaacayuela/Ana_pruebas_imageJ/margarita/lifZMaxprojection_code/src/main/zMaxProjection.groovy" "headless=true,inputFilesDir='/home/anaacayuela/Ana_pruebas_imageJ/margarita/images',outputDir='/home/anaacayuela/Ana_pruebas_imageJ/margarita/results',startSlice=1,stopSlice=4,channelComb='1,2,3',fileFormat='Tiff',minValueChOne=1,maxValueChOne=1,minValueChTwo=1,maxValueChTwo=1,minValueChThree=1,maxValueChThree=1,minValueChFour=1,maxValueChFour=1"``
+``/Applications/Fiji.app/Contents/MacOS/ImageJ-macosx --ij2 --headless --run "/Users/Marga/Desktop/lifZMaxprojection_code-main/src/main/zMaxProjection.groovy" "headless=true,inputFilesDir='/Users/Marga/Desktop/Images',outputDir='/Users/Marga/Desktop/Results',startSlice=1,stopSlice=1,channelComb='1,2,3',fileFormat='Tiff',minValueChOne=1,maxValueChOne=1,minValueChTwo=1,maxValueChTwo=1,minValueChThree=1,maxValueChThree=1,minValueChFour=1,maxValueChFour=1"`
 
 ### Parameters Explanation:
 - ``headless`` : true. 
