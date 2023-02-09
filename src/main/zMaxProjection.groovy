@@ -23,6 +23,7 @@ import java.awt.Point
 
 // INPUT UI
 //
+#@Boolean (label="Run headless", default="false") headless
 #@File(label = "Input File Directory", style = "directory") inputFilesDir
 #@File(label = "Output directory", style = "directory") outputDir
 #@Integer(label = "Start Slice", value = 1) startSlice
@@ -41,23 +42,22 @@ import java.awt.Point
 
 // IDE
 //
-def inputFilesDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/images");
-def outputDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/results");
-def startSlice = 1;
-def stopSlice = 1;
-def channelComb = "1,2,3,4"
-def fileFormat = "JTiff"
-def minValueChOne = 1;
-def maxValueChOne = 1;
-def minValueChTwo = 1;
-def maxValueChTwo = 1;
-def minValueChThree = 1;
-def maxValueChThree = 1;
-def minValueChFour = 1;
-def maxValueChFour = 1;
-
-def headless = true;
-new ImageJ().setVisible(false);
+//def inputFilesDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/images");
+//def outputDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/results");
+//def startSlice = 1;
+//def stopSlice = 1;
+//def channelComb = "1,2,3,4"
+//def fileFormat = "Tiff"
+//def minValueChOne = 1;
+//def maxValueChOne = 1;
+//def minValueChTwo = 1;
+//def maxValueChTwo = 1;
+//def minValueChThree = 1;
+//def maxValueChThree = 1;
+//def minValueChFour = 1;
+//def maxValueChFour = 1;
+//def headless = true;
+//new ImageJ().setVisible(false);
 
 IJ.log("-Parameters selected: ")
 IJ.log("    -inputFileDir: " + inputFilesDir)
@@ -172,6 +172,5 @@ IJ.log("Done!!!")
 //
 if (headless)
     System.exit(0)
-
 
 
