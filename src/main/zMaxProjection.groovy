@@ -150,7 +150,7 @@ for (def i = 0; i < listOfFiles.length; i++) {
         def compositeImp = null;
         def channelsToMerge = null;
         if (channelComb.length() == 1) {
-            compositeImp = channelsIntensity[channelComb.toInteger()];
+            compositeImp = channelsIntensity[channelComb.toInteger()-1];
         } else {
             def channelStrings = channelComb.split(",");
             channelsToMerge = new ImagePlus[channelStrings.length];
