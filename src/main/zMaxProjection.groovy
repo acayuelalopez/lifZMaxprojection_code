@@ -123,7 +123,7 @@ for (def i = 0; i < listOfFiles.length; i++) {
             impMax = ZProjector.run(imp, "max", startSlice, stopSlice);
         }
         /** Split channels */
-        def channels = ChannelSplitter.split(imp);
+        def channels = ChannelSplitter.split(impMax);
         /** Get channel 1 */
         def chOne = channels[0];
         /** Get channel 2 */
