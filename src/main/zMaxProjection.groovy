@@ -34,6 +34,7 @@ import java.awt.Point
 #@Integer(label = "Stop Slice", value = 1) stopSlice
 #@String(label = "Channel Combination", value = "1,2,3,4") channelComb
 #@String(label = "File Format", value = "Tiff") fileFormat
+#@String(label = "Font Size", value = "24") fontSize
 #@Integer(label = "Scale Bar Width", value = 100) scaleWidth
 #@Integer(label = "Min Value Channel One", value = 1) minValueChOne
 #@Integer(label = "Max Value Channel One", value = 1) maxValueChOne
@@ -65,6 +66,7 @@ import java.awt.Point
 //
 //def headless = true;
 //new ImageJ().setVisible(true);
+
 IJ.log("-Parameters selected: ")
 IJ.log("    -inputFileDir: " + inputFilesDir)
 IJ.log("    -outputDir: " + outputDir)
@@ -157,20 +159,21 @@ for (def i = 0; i < listOfFiles.length; i++) {
             def channelsIntensity = new ImagePlus[]{chOne, chTwo, chThree, chFour};
             def compositeImp = null;
             def channelsToMerge = null;
-            if (channelComb.length() == 1) {
-                compositeImp = channelsIntensity[channelComb.toInteger() - 1];
+            def channelStrings = channelComb.split(",");
+            if (channelStrings.length() == 1) {
+                compositeImp = channelsIntensity[channelStrings[0].toInteger().intValue()-1];
             } else {
-                def channelStrings = channelComb.split(",");
+                //def channelStrings = channelComb.split(",");
                 channelsToMerge = new ImagePlus[channelStrings.length];
                 for (int z = 0; z < channelsToMerge.length; z++)
-                    channelsToMerge[z] = channelsIntensity[z];
+                    channelsToMerge[z] = channelsIntensity[channelStrings[z].toInteger().intValue()-1];
                 compositeImp = RGBStackMerge.mergeChannels(channelsToMerge, false);
             }
             /** Set original calibration */
             compositeImp.setCalibration(cal);
             /** Set scale */
-            def resol = 1 / (imp.getCalibration().pixelWidth);
-            IJ.run(compositeImp, "Set Scale...", String.format("distance=%f known=1 unit=micron", resol));
+            def resol = (1 / (imp.getCalibration().pixelWidth)).toString();
+            IJ.run(compositeImp, "Set Scale...", "distance="+resol+" known=1 unit=micron");
             /** Set scale bar */
 //            def scaleBarSize = 0.1.doubleValue();
 //            def imageWidth = compositeImp.getWidth().doubleValue() * cal.pixelWidth;
@@ -178,7 +181,7 @@ for (def i = 0; i < listOfFiles.length; i++) {
 //            while (scaleBarLen < imageWidth * scaleBarSize) {
 //                scaleBarLen = Math.round((scaleBarLen * 2.3) / (Math.pow(10, (Math.floor(Math.log10(Math.abs(scaleBarLen * 2.3))))))) * (Math.pow(10, (Math.floor(Math.log10(Math.abs(scaleBarLen * 2.3))))));
 //            }
-            IJ.run(compositeImp, "Scale Bar...", String.format("width=%f height=4 thickness=4 font=14 color=White background=None location=[Lower Right] horizontal bold overlay", scaleWidth.doubleValue()));
+            IJ.run(compositeImp, "Scale Bar...", "width="+scaleWidth.toString()+" height=4 thickness=4 font=24 color=White background=None location=[Lower Right] horizontal bold overlay");
             IJ.log("        -Saving serie: " + (j + 1).toString() + " in " + outputImageDir.getAbsolutePath() + " as " + impTitleSerie + "_" + channelComb.replaceAll(",", ""))
             /** Save each serie  as set in file format ("Tiff" or "Jpeg") */
             IJ.saveAs(compositeImp, fileFormat, outputImageDir.getAbsolutePath()
@@ -191,8 +194,8 @@ for (def i = 0; i < listOfFiles.length; i++) {
 IJ.log("Done!!!")
 // exit
 //
-if (headless)
-    System.exit(0)
+//if (headless)
+//    System.exit(0)
 
 //double computeDefaultBarWidth(ImagePlus imp) {
 //    def cal = imp.getCalibration();
