@@ -28,44 +28,43 @@ import java.awt.Point
 
 // INPUT UI
 //
-//#@File(label = "Input File Directory", style = "directory") inputFilesDir
-//#@File(label = "Output directory", style = "directory") outputDir
-//#@Integer(label = "Start Slice", value = 1) startSlice
-//#@Integer(label = "Stop Slice", value = 1) stopSlice
-//#@String(label = "Channel Combination", value = "1,2,3,4") channelComb
-//#@String(label = "File Format", value = "Tiff") fileFormat
-//#@Integer(label = "Scale Bar Width", value = 100) scaleWidth
-//#@Integer(label = "Min Value Channel One", value = 1) minValueChOne
-//#@Integer(label = "Max Value Channel One", value = 1) maxValueChOne
-//#@Integer(label = "Min Value Channel Two", value = 1) minValueChTwo
-//#@Integer(label = "Max Value Channel Two", value = 1) maxValueChTwo
-//#@Integer(label = "Min Value Channel Three", value = 1) minValueChThree
-//#@Integer(label = "Max Value Channel Three", value = 1) maxValueChThree
-//#@Integer(label = "Min Value Channel Four", value = 1) minValueChFour
-//#@Integer(label = "Max Value Channel Four", value = 1) maxValueChFour
+#@File(label = "Input File Directory", style = "directory") inputFilesDir
+#@File(label = "Output directory", style = "directory") outputDir
+#@Integer(label = "Start Slice", value = 1) startSlice
+#@Integer(label = "Stop Slice", value = 1) stopSlice
+#@String(label = "Channel Combination", value = "1,2,3,4") channelComb
+#@String(label = "File Format", value = "Tiff") fileFormat
+#@Integer(label = "Scale Bar Width", value = 100) scaleWidth
+#@Integer(label = "Min Value Channel One", value = 1) minValueChOne
+#@Integer(label = "Max Value Channel One", value = 1) maxValueChOne
+#@Integer(label = "Min Value Channel Two", value = 1) minValueChTwo
+#@Integer(label = "Max Value Channel Two", value = 1) maxValueChTwo
+#@Integer(label = "Min Value Channel Three", value = 1) minValueChThree
+#@Integer(label = "Max Value Channel Three", value = 1) maxValueChThree
+#@Integer(label = "Min Value Channel Four", value = 1) minValueChFour
+#@Integer(label = "Max Value Channel Four", value = 1) maxValueChFour
 
 
 // IDE
 //
-def inputFilesDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/images");
-def outputDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/results");
-def startSlice = 1;
-def stopSlice = 1;
-def channelComb = "1,2,3,4"
-def fileFormat = "Tiff"
-def scaleWidth = 100;
-def minValueChOne = 1;
-def maxValueChOne = 1;
-def minValueChTwo = 1;
-def maxValueChTwo = 1;
-def minValueChThree = 1;
-def maxValueChThree = 1;
-def minValueChFour = 1;
-def maxValueChFour = 1;
-
-def headless = true;
-new ImageJ().setVisible(true);
-
+//def inputFilesDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/images");
+//def outputDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/results");
+//def startSlice = 1;
+//def stopSlice = 1;
+//def channelComb = "1,2,3,4"
+//def fileFormat = "Tiff"
+//def scaleWidth = 100;
+//def minValueChOne = 1;
+//def maxValueChOne = 1;
+//def minValueChTwo = 1;
+//def maxValueChTwo = 1;
+//def minValueChThree = 1;
+//def maxValueChThree = 1;
+//def minValueChFour = 1;
+//def maxValueChFour = 1;
+//
+//def headless = true;
+//new ImageJ().setVisible(true);
 IJ.log("-Parameters selected: ")
 IJ.log("    -inputFileDir: " + inputFilesDir)
 IJ.log("    -outputDir: " + outputDir)
