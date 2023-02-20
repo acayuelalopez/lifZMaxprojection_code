@@ -35,6 +35,7 @@ import java.awt.Point
 #@String(label = "Channel Combination", value = "1,2,3,4") channelComb
 #@String(label = "File Format", value = "Tiff") fileFormat
 #@String(label = "Font Size", value = "24") fontSize
+#@Boolean(label = "Apply Scale Bar", value = true) applyScaleBar
 #@Integer(label = "Scale Bar Width", value = 100) scaleWidth
 #@String(label = "Color Channel One", value = "Green") colorChOne
 #@String(label = "Color Channel Two", value = "Red") colorChTwo
@@ -185,16 +186,12 @@ for (def i = 0; i < listOfFiles.length; i++) {
             /** Set original calibration */
             compositeImp.setCalibration(cal);
             /** Set scale */
-            def resol = (1 / (imp.getCalibration().pixelWidth)).toString();
-            IJ.run(compositeImp, "Set Scale...", "distance=" + resol + " known=1 unit=micron");
-            /** Set scale bar */
-//            def scaleBarSize = 0.1.doubleValue();
-//            def imageWidth = compositeImp.getWidth().doubleValue() * cal.pixelWidth;
-//            def scaleBarLen = 100.doubleValue();
-//            while (scaleBarLen < imageWidth * scaleBarSize) {
-//                scaleBarLen = Math.round((scaleBarLen * 2.3) / (Math.pow(10, (Math.floor(Math.log10(Math.abs(scaleBarLen * 2.3))))))) * (Math.pow(10, (Math.floor(Math.log10(Math.abs(scaleBarLen * 2.3))))));
-//            }
-            IJ.run(compositeImp, "Scale Bar...", "width=" + scaleWidth.toString() + " height=4 thickness=4 font=" + fontSize + " color=White background=None location=[Lower Right] horizontal bold overlay");
+            if(applyScaleBar) {
+                def resol = (1 / (imp.getCalibration().pixelWidth)).toString();
+                IJ.run(compositeImp, "Set Scale...", "distance=" + resol + " known=1 unit=micron");
+                /** Set scale bar */
+                IJ.run(compositeImp, "Scale Bar...", "width=" + scaleWidth.toString() + " height=4 thickness=4 font=" + fontSize + " color=White background=None location=[Lower Right] horizontal bold overlay");
+            }
             IJ.log("        -Saving serie: " + (j + 1).toString() + " in " + outputImageDir.getAbsolutePath() + " as " + impTitleSerie + "_" + channelComb.replaceAll(",", ""))
             /** Save each serie  as set in file format ("Tiff" or "Jpeg") */
             IJ.saveAs(compositeImp, fileFormat, outputImageDir.getAbsolutePath()
