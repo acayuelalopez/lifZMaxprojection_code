@@ -57,9 +57,13 @@ import java.awt.Point
 //def outputDir = new File("/home/anaacayuela/Ana_pruebas_imageJ/margarita/results");
 //def startSlice = 1;
 //def stopSlice = 1;
-//def channelComb = "3,4"
+//def channelComb = "3"
 //def fileFormat = "Tiff"
 //def scaleWidth = 100;
+//def colorChOne = "Green"
+//def colorChTwo = "Red"
+//def colorChThree = "Cyan"
+//def colorChFour= "Blue"
 //def minValueChOne = 1;
 //def maxValueChOne = 1;
 //def minValueChTwo = 1;
@@ -178,10 +182,14 @@ for (def i = 0; i < listOfFiles.length; i++) {
 //                compositeImp = channelsIntensity[channelStrings[0].toInteger().intValue()-1];
 //            } else {
             //def channelStrings = channelComb.split(",");
-            channelsToMerge = new ImagePlus[channelStrings.length];
-            for (int z = 0; z < channelsToMerge.length; z++)
-                channelsToMerge[z] = channelsIntensity[channelStrings[z].toInteger().intValue() - 1];
-            compositeImp = RGBStackMerge.mergeChannels(channelsToMerge, false);
+            if(channelStrings.length !=1) {
+                channelsToMerge = new ImagePlus[channelStrings.length];
+                for (int z = 0; z < channelsToMerge.length; z++)
+                    channelsToMerge[z] = channelsIntensity[channelStrings[z].toInteger().intValue() - 1];
+                compositeImp = RGBStackMerge.mergeChannels(channelsToMerge, false);
+            }else{
+                compositeImp = channelsIntensity[channelStrings[0].toInteger().intValue()-1]
+            }
             // }
             /** Set original calibration */
             compositeImp.setCalibration(cal);
