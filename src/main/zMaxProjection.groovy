@@ -65,14 +65,15 @@ import java.awt.Point
 //def colorChThree = "Cyan"
 //def colorChFour= "Blue"
 //def minValueChOne = 1;
-//def maxValueChOne = 1;
+//def maxValueChOne = 150;
 //def minValueChTwo = 1;
-//def maxValueChTwo = 1;
+//def maxValueChTwo = 150;
 //def minValueChThree = 1;
-//def maxValueChThree = 1;
+//def maxValueChThree = 150;
 //def minValueChFour = 1;
-//def maxValueChFour = 1;
+//def maxValueChFour = 150;
 //def fontSize = "14"
+//def applyScaleBar = false;
 //
 //def headless = true;
 //new ImageJ().setVisible(true);
@@ -155,24 +156,24 @@ for (def i = 0; i < listOfFiles.length; i++) {
 
             /** Set display range on channel 1 */
             if (minValueChOne != 1 || maxValueChOne != 1)
-                chOne.setDisplayRange(minValueChOne.intValue(), maxValueChOne.intValue())
+                chOne.setDisplayRange(minValueChOne.doubleValue(), maxValueChOne.doubleValue())
             /** Set color on channel 1 */
             IJ.run(chOne, colorChOne.toString(), "");
             /** Set display range on channel 2 */
             if (minValueChTwo != 1 || maxValueChTwo != 1)
-                chTwo.setDisplayRange(minValueChTwo.intValue(), maxValueChTwo.intValue())
+                chTwo.setDisplayRange(minValueChTwo.doubleValue(), maxValueChTwo.doubleValue())
             /** Set color on channel 2 */
             IJ.run(chTwo, colorChTwo.toString(), "");
             /** Set display range on channel 3 */
             if (minValueChThree != 1 || maxValueChThree != 1)
-                chThree.setDisplayRange(minValueChThree.intValue(), maxValueChThree.intValue())
+                chThree.setDisplayRange(minValueChThree.doubleValue(), maxValueChThree.doubleValue())
             /** Set color on channel 3 */
             IJ.run(chThree, colorChThree.toString(), "");
             /** Set display range on channel 4 */
             if (minValueChFour != 1 || maxValueChFour != 1)
-                chFour.setDisplayRange(minValueChFour.intValue(), maxValueChFour.intValue())
+                chFour.setDisplayRange(minValueChFour.doubleValue(), maxValueChFour.doubleValue())
             /** Set color on channel 4 */
-            IJ.run(chOne, colorChFour.toString(), "");
+            IJ.run(chFour, colorChFour.toString(), "");
 
             def channelsIntensity = new ImagePlus[]{chOne, chTwo, chThree, chFour};
             def compositeImp = null;
@@ -193,6 +194,7 @@ for (def i = 0; i < listOfFiles.length; i++) {
             // }
             /** Set original calibration */
             compositeImp.setCalibration(cal);
+            compositeImp.show()
             /** Set scale */
             if(applyScaleBar) {
                 def resol = (1 / (imp.getCalibration().pixelWidth)).toString();
