@@ -145,71 +145,75 @@ for (def i = 0; i < listOfFiles.length; i++) {
 
             /** Split channels */
             def channels = ChannelSplitter.split(impMax);
-            /** Get channel 1 */
-            def chOne = channels[0];
-            /** Get channel 2 */
-            def chTwo = channels[1];
-            /** Get channel 3 */
-            def chThree = channels[2];
-            /** Get channel 4 */
-            def chFour = channels[3];
+            if (channels.length == 4) {
+                /** Get channel 1 */
+                def chOne = channels[0];
+                /** Get channel 2 */
+                def chTwo = channels[1];
+                /** Get channel 3 */
+                def chThree = channels[2];
+                /** Get channel 4 */
+                def chFour = channels[3];
 
-            /** Set display range on channel 1 */
-            if (minValueChOne != 1 || maxValueChOne != 1)
-                chOne.setDisplayRange(minValueChOne.doubleValue(), maxValueChOne.doubleValue())
-            /** Set color on channel 1 */
-            IJ.run(chOne, colorChOne.toString(), "");
-            /** Set display range on channel 2 */
-            if (minValueChTwo != 1 || maxValueChTwo != 1)
-                chTwo.setDisplayRange(minValueChTwo.doubleValue(), maxValueChTwo.doubleValue())
-            /** Set color on channel 2 */
-            IJ.run(chTwo, colorChTwo.toString(), "");
-            /** Set display range on channel 3 */
-            if (minValueChThree != 1 || maxValueChThree != 1)
-                chThree.setDisplayRange(minValueChThree.doubleValue(), maxValueChThree.doubleValue())
-            /** Set color on channel 3 */
-            IJ.run(chThree, colorChThree.toString(), "");
-            /** Set display range on channel 4 */
-            if (minValueChFour != 1 || maxValueChFour != 1)
-                chFour.setDisplayRange(minValueChFour.doubleValue(), maxValueChFour.doubleValue())
-            /** Set color on channel 4 */
-            IJ.run(chFour, colorChFour.toString(), "");
+                /** Set display range on channel 1 */
+                if (minValueChOne != 1 || maxValueChOne != 1)
+                    chOne.setDisplayRange(minValueChOne.doubleValue(), maxValueChOne.doubleValue())
+                /** Set color on channel 1 */
+                IJ.run(chOne, colorChOne.toString(), "");
+                /** Set display range on channel 2 */
+                if (minValueChTwo != 1 || maxValueChTwo != 1)
+                    chTwo.setDisplayRange(minValueChTwo.doubleValue(), maxValueChTwo.doubleValue())
+                /** Set color on channel 2 */
+                IJ.run(chTwo, colorChTwo.toString(), "");
+                /** Set display range on channel 3 */
+                if (minValueChThree != 1 || maxValueChThree != 1)
+                    chThree.setDisplayRange(minValueChThree.doubleValue(), maxValueChThree.doubleValue())
+                /** Set color on channel 3 */
+                IJ.run(chThree, colorChThree.toString(), "");
+                /** Set display range on channel 4 */
+                if (minValueChFour != 1 || maxValueChFour != 1)
+                    chFour.setDisplayRange(minValueChFour.doubleValue(), maxValueChFour.doubleValue())
+                /** Set color on channel 4 */
+                IJ.run(chFour, colorChFour.toString(), "");
 
-            def channelsIntensity = new ImagePlus[]{chOne, chTwo, chThree, chFour};
-            def compositeImp = null;
-            def channelsToMerge = null;
-            def channelStrings = channelComb.split(",");
+                def channelsIntensity = new ImagePlus[]{chOne, chTwo, chThree, chFour};
+                def compositeImp = null;
+                def channelsToMerge = null;
+                def channelStrings = channelComb.split(",");
 //            if (channelStrings.length() == 1) {
 //                compositeImp = channelsIntensity[channelStrings[0].toInteger().intValue()-1];
 //            } else {
-            //def channelStrings = channelComb.split(",");
-            if(channelStrings.length !=1) {
-                channelsToMerge = new ImagePlus[channelStrings.length];
-                for (int z = 0; z < channelsToMerge.length; z++)
-                    channelsToMerge[z] = channelsIntensity[channelStrings[z].toInteger().intValue() - 1];
-                compositeImp = RGBStackMerge.mergeChannels(channelsToMerge, false);
+                //def channelStrings = channelComb.split(",");
+                if (channelStrings.length != 1) {
+                    channelsToMerge = new ImagePlus[channelStrings.length];
+                    for (int z = 0; z < channelsToMerge.length; z++)
+                        channelsToMerge[z] = channelsIntensity[channelStrings[z].toInteger().intValue() - 1];
+                    compositeImp = RGBStackMerge.mergeChannels(channelsToMerge, false);
+                } else {
+                    compositeImp = channelsIntensity[channelStrings[0].toInteger().intValue() - 1]
+                }
+                // }
+                /** Set original calibration */
+                compositeImp.setCalibration(cal);
+                compositeImp.show()
+                /** Set scale */
+                if (applyScaleBar) {
+                    def resol = (1 / (imp.getCalibration().pixelWidth)).toString();
+                    IJ.run(compositeImp, "Set Scale...", "distance=" + resol + " known=1 unit=micron");
+                    /** Set scale bar */
+                    IJ.run(compositeImp, "Scale Bar...", "width=" + scaleWidth.toString() + " height=4 thickness=4 font=" + fontSize + " color=White background=None location=[Lower Right] horizontal bold overlay");
+                }
+                IJ.log("        -Saving serie: " + (j + 1).toString() + " in " + outputImageDir.getAbsolutePath() + " as " + impTitleSerie + "_" + channelComb.replaceAll(",", ""))
+                /** Save each serie  as set in file format ("Tiff" or "Jpeg") */
+                IJ.saveAs(compositeImp, fileFormat, outputImageDir.getAbsolutePath()
+                        + File.separator + impTitleSerie + "_" + channelComb.replaceAll(",", ""));
+
             }else{
-                compositeImp = channelsIntensity[channelStrings[0].toInteger().intValue()-1]
+                IJ.log("It is needed to have 4 channels to do the analysis.")
             }
-            // }
-            /** Set original calibration */
-            compositeImp.setCalibration(cal);
-            compositeImp.show()
-            /** Set scale */
-            if(applyScaleBar) {
-                def resol = (1 / (imp.getCalibration().pixelWidth)).toString();
-                IJ.run(compositeImp, "Set Scale...", "distance=" + resol + " known=1 unit=micron");
-                /** Set scale bar */
-                IJ.run(compositeImp, "Scale Bar...", "width=" + scaleWidth.toString() + " height=4 thickness=4 font=" + fontSize + " color=White background=None location=[Lower Right] horizontal bold overlay");
-            }
-            IJ.log("        -Saving serie: " + (j + 1).toString() + " in " + outputImageDir.getAbsolutePath() + " as " + impTitleSerie + "_" + channelComb.replaceAll(",", ""))
-            /** Save each serie  as set in file format ("Tiff" or "Jpeg") */
-            IJ.saveAs(compositeImp, fileFormat, outputImageDir.getAbsolutePath()
-                    + File.separator + impTitleSerie + "_" + channelComb.replaceAll(",", ""));
-
         }
-    }
 
+    }
 }
 IJ.log("Done!!!")
 // exit
