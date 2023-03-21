@@ -195,7 +195,6 @@ for (def i = 0; i < listOfFiles.length; i++) {
                 // }
                 /** Set original calibration */
                 compositeImp.setCalibration(cal);
-                compositeImp.show()
                 /** Set scale */
                 if (applyScaleBar) {
                     def resol = (1 / (imp.getCalibration().pixelWidth)).toString();
